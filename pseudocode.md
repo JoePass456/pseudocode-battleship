@@ -4,11 +4,11 @@ Battleship AI Opponent (USER vs BOT):
 
 
 Set 1990SHIPS.dat   //This will be a premade file that will contain the ship info for the 1990 MB version of Battleship containing:
-                    //              A, 5, Aircraft Carrier
-                    //              B, 4, Battleship
-                    //              C, 3, Cruiser
-                    //              S, 3, Submarine
-                    //              D, 2, Destroyer
+                   -//              A, 5, Aircraft Carrier
+                   -//              B, 4, Battleship
+                   -//              C, 3, Cruiser
+                   -//              S, 3, Submarine
+                   -//              D, 2, Destroyer
                     
 --------------------------------------------------------------------------------------------------------------------------------------
 
