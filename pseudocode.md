@@ -1,41 +1,64 @@
 Battleship AI Opponent (USER vs BOT):
-*Using 1990 Milton Bradley ruleset
-*versions do differ.  For example, the ship list in the 2002 release is slightly different
+
+-Using 1990 Milton Bradley ruleset (versions do differ.  For example, the ship list in the 2002 release is slightly different)
 
 
 Set 1990SHIPS.dat   //This will be a premade file that will contain the ship info for the 1990 MB version of Battleship containing:
-                   -//              A, 5, Aircraft Carrier
-                   -//              B, 4, Battleship
-                   -//              C, 3, Cruiser
-                   -//              S, 3, Submarine
-                   -//              D, 2, Destroyer
+                    //              A, 5, Aircraft Carrier
+                    //              B, 4, Battleship
+                    //              C, 3, Cruiser
+                    //              S, 3, Submarine
+                    //              D, 2, Destroyer
                     
 --------------------------------------------------------------------------------------------------------------------------------------
 
 START 
 
-Init USERMAP.dat and BOTMAP.dat             // MAP and GRID files will be a string of 100 characters representing the 10x10 grid
+Init SHIPLIST.dat                           // This by default will be 1990SHIPS.dat, but *COULD* be set by an input variable
 
-Init USERGRID.dat and BOTGRID.dat           //      Initiated maps and grids will be blank; in this case a string of of "0"s  
+Init BOTMAP                                 // BOTMAP file will be a string of 100 characters representing the 10x10 grid
 
 Init USERLOG.dat and BOTLOG.dat             // LOGS will be data files that store the TURN, X, Y, and HIT$ variables 
 
 Init USERSCR and BOTSCR                     // These init at 0 points and will be used to determine the game winner
                                     
 Init WINSCR                                 // This will be set in the program as the condition for win,
-                                            //      (in the 1990 version the number will be set to 17)
+                                            //    (in the 1990 version the number will be set to 17)
                                     
 Init TURN = 1                               // This will keep track of the current turn number and be recorded in the LOG files
 
 Init TURNMARK                               // This is a turn marker and will alternate from U to B to determine who's turn it is
 
-Init SHIPABBR, SHIPSIZE, and SHIPNAME       // This will be used to pull data from the *SHIPS.dat file  
+Init SHIPABBR, SHIPSIZE, and SHIPNAME       // This will be used to pull data from the SHIPLIST.dat file 
 
-PROGRAM setbotmap                           // This will read the *SHIPS.dat file and randomly assign each ship a legal location
-                                            // (*) Using the data, this program will use RNG to place one ship in a starting location,
-                                            // use RNG to determine orientation, and then use SHIPSIZE to determine final location.
-                                            // IF ship is (a) out of bounds or (b) overlapping a previaously set ship, THEN program will
-                                            // reset to (*
+Init X and Y                                // These will be the coordinates of each shot of the USER or BOT and will be recorded in the LOG.dat
+
+FUNCTION setBotMap                          // This will read the SHIPS.dat file and randomly assign each ship a location
+  output: BOTMAP                            //    !! Using the data, this program will use RNG (using X and Y) to place one ship in a starting location,
+  output: WINSCR                            //    use RNG to determine orientation, and then use SHIPSIZE to determine final location.
+                                            //    IF ship is (a) out of bounds or (b) overlapping a previaously set ship, THEN program will
+                                            //    RETURN to !! and REPEAT UNTIL all ships (in this case five) are in legal positions. 
+                                            // This will also add up ship sizes to Compute WINSCR
+                                            // NOTE: This *COULD* be greatly simplified by using preset patterns, however this would hamper the 
+END                                         //    replayability of the game.
+
+INPUT "Who will go first?": TURNMARK        // Rules simply state "Choose a player to go first", therefore this program allows the USER to make
+                                            //    this determination.  This will Set the TURNMARK to either U or B
+                                            
+IF USERSCR and BOTSCR < WINSCR THEN (       // If either players acheives the WINSCR, then they have won and the program will exit this loop
+
+  IF TURNMARK = U THEN (                    // Begins USER turn
+  
+    INPUT "Enter your shot!": X,Y           // The user enters the X and Y variables for his shot both must be 1 - 10 ELSE REPEAT
+    
+    FUNCTION computeHit (X,Y,BOTMAP)        // Cross references the coordinates of the shot with the BOTMAP and logs either "miss!" or 
+       output: log result                   // "Hit!".  If hit it will log which ship was hit and add a point to the USERSCR.  It will also log 
+                                            // the X,Y and SHIPABBR in the USERLOG file.
+      
+
+
+
+  
 
 
 
