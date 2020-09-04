@@ -86,7 +86,9 @@ IF USERSCR and BOTSCR < WINSCR THEN        // If either players acheives the WIN
   FUNCTION logResult(BOTLOG,X,Y,RESULT)    //  function updates the BOTLOG  
   
   END IF         //  Ends BOT turn
+  
   TURN ++
+  
 END IF      
                                             
   
