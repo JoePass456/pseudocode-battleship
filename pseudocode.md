@@ -12,7 +12,7 @@ Set 1990SHIPS.dat   //This will be a premade file that will contain the ship inf
                     
 --------------------------------------------------------------------------------------------------------------------------------------
 
-START 
+START PROGRAM
 
 Init SHIPLIST.dat                           // This by default will be 1990SHIPS.dat, but *COULD* be set by an input variable
 
@@ -50,9 +50,12 @@ END                                         //    replayability of the game.
 INPUT "Who will go first?": TURNMARK        // Rules simply state "Choose a player to go first", therefore this program allows the USER to make
                                             //    this determination.  This will Set the TURNMARK to either U or B
                                             
+----------------------------------------------------------------------------------------------------------------------------------------------------------------                                            
+                                            
 IF USERSCR and BOTSCR < WINSCR THEN {       // If either players acheives the WINSCR, then they have won and the program will exit this loop
 
-  IF TURNMARK = U                      // Begins USER turn
+  
+  IF TURNMARK = U     // Begins USER turn
   
     INPUT "Enter your shot!": X,Y           // The user enters the X and Y variables for his shot both must be 1 - 10 ELSE REPEAT
     
@@ -67,20 +70,32 @@ IF USERSCR and BOTSCR < WINSCR THEN {       // If either players acheives the WI
      FUNCTION followUpShot                  //   was a hit then it will continue to take shots based on an algorithm and RNG to keep shooting
                                             //   until the ship is sunk.  IF this shot is already logged, it will REPEAT.  Once ship is sunk it
                                             //   will reassign FOLLOWUP to FALSE
-    
-  ELSE
+  
+  ELSE          // Ends USER turn, begin BOT turn
+  
+  
     FUNCTION takeShot                       // If not shooting a followUpShot, this function uses RNG to select X and Y for shot.  If this
       output: X, Y                          // shot has already been logged it will REPEAT until shot is a new coordinate
       
-      LOG "Incoming shot at coordinates" X, Y
+    LOG "Incoming shot at coordinates" X, Y
   END                                        
   
   INPUT "Did shot hit?": RESULT             // The user will input if the a ship was hit and which ship it was.
-  IF RESULT is not 0 THEN BOTSCR ++
+  
   END  
-  FUNCTION logResult(BOTRLOG,X,Y,RESULT)    //  function updates the BOTLOG                                      
+  FUNCTION logResult(BOTLOG,X,Y,RESULT)    //  function updates the BOTLOG  
+  
+  END IF        //  Ends BOT turn
                                             
-}  
+)  
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+ELSE
 
+IF USERSCR = WINSCR LOG "Congradulations, you won!"
 
+ELSE
+
+LOG "Sorry, your fleet has been destroyed!  Better luck next time!"
+
+END PROGRAM
