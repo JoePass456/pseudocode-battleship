@@ -52,7 +52,7 @@ INPUT "Who will go first?": TURNMARK        // Rules simply state "Choose a play
                                             
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------                                            
                                             
-IF USERSCR and BOTSCR < WINSCR THEN {       // If either players acheives the WINSCR, then they have won and the program will exit this loop
+IF USERSCR and BOTSCR < WINSCR THEN        // If either players acheives the WINSCR, then they have won and the program will exit this loop
 
   
   IF TURNMARK = U     // Begins USER turn
@@ -78,24 +78,27 @@ IF USERSCR and BOTSCR < WINSCR THEN {       // If either players acheives the WI
       output: X, Y                          // shot has already been logged it will REPEAT until shot is a new coordinate
       
     LOG "Incoming shot at coordinates" X, Y
-  END                                        
+  END IF                                       
   
   INPUT "Did shot hit?": RESULT             // The user will input if the a ship was hit and which ship it was.
   
-  END  
+    
   FUNCTION logResult(BOTLOG,X,Y,RESULT)    //  function updates the BOTLOG  
   
-  END IF        //  Ends BOT turn
+  END IF         //  Ends BOT turn
+END IF      
                                             
-)  
+  
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+IF USERSCR = WINSCR 
+
+  LOG "Congradulations, you won!"
+
 ELSE
 
-IF USERSCR = WINSCR LOG "Congradulations, you won!"
+  LOG "Sorry, your fleet has been destroyed!  Better luck next time!"
 
-ELSE
-
-LOG "Sorry, your fleet has been destroyed!  Better luck next time!"
+END IF
 
 END PROGRAM
